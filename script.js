@@ -1,16 +1,17 @@
-// Typing Effect
 const text = ["Full Stack Developer", "Python Developer", "Web Developer"];
 let index = 0;
 let charIndex = 0;
 const typingElement = document.querySelector(".typing");
+const toggle = document.getElementById("theme-toggle");
+const body = document.body;
 
 function type() {
     if (charIndex < text[index].length) {
         typingElement.textContent += text[index].charAt(charIndex);
         charIndex++;
-        setTimeout(type, 100);
+        setTimeout(type, 90);
     } else {
-        setTimeout(erase, 1200);
+        setTimeout(erase, 1000);
     }
 }
 
@@ -27,12 +28,26 @@ function erase() {
 
 type();
 
-// Scroll Reveal
 window.addEventListener("scroll", () => {
     document.querySelectorAll(".reveal").forEach((el) => {
-        const rect = el.getBoundingClientRect().top;
-        if (rect < window.innerHeight - 100) {
+        if (el.getBoundingClientRect().top < window.innerHeight - 100) {
             el.classList.add("active");
         }
     });
+});
+
+if (localStorage.getItem("theme") === "dark") {
+    body.classList.add("dark-mode");
+    toggle.textContent = "☀️";
+}
+
+toggle.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    if (body.classList.contains("dark-mode")) {
+        toggle.textContent = "☀️";
+        localStorage.setItem("theme", "dark");
+    } else {
+        toggle.textContent = "🌙";
+        localStorage.setItem("theme", "light");
+    }
 });
