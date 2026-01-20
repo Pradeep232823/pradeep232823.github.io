@@ -1,10 +1,13 @@
-const text = ["Full Stack Developer", "Python Developer", "Web Developer"];
+// Typing effect
+const text = ["Data Analyst"];
 let index = 0;
 let charIndex = 0;
 
 const typingElement = document.querySelector(".typing");
 
 function type() {
+    if (!typingElement) return;
+
     if (charIndex < text[index].length) {
         typingElement.textContent += text[index].charAt(charIndex);
         charIndex++;
@@ -15,6 +18,8 @@ function type() {
 }
 
 function erase() {
+    if (!typingElement) return;
+
     if (charIndex > 0) {
         typingElement.textContent = text[index].substring(0, charIndex - 1);
         charIndex--;
@@ -25,8 +30,11 @@ function erase() {
     }
 }
 
-type();
+document.addEventListener("DOMContentLoaded", () => {
+    type();
+});
 
+// Scroll reveal
 window.addEventListener("scroll", () => {
     document.querySelectorAll(".reveal").forEach((el) => {
         if (el.getBoundingClientRect().top < window.innerHeight - 100) {
